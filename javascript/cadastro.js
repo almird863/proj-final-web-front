@@ -1,6 +1,5 @@
-const API_URL = 'http://localhost:3001'
-
 const formCadastro = document.getElementById('form-cadastro')
+const API_URL = 'http://localhost:3001'
 
 formCadastro.addEventListener('submit', (event) => {
     event.preventDefault()
