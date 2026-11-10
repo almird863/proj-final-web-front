@@ -19,8 +19,8 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="pesquisar.html">Pesquisar</a></li>
-                    <li>LOGIN</li>
-                    <li>CADASTRAR</li>
+                    <li><a href="login.html">LOGIN</a></li>
+                    <li><a href="cadastro.html">CADASTRAR</a></li>
                 </ul>
             </div>
         </nav>
@@ -30,11 +30,11 @@
         <!-- Section de Destaque | Mais informações -->
         <section>
             <div>
-                <img src="assets/truck2.jpg" alt="food truck" id="ft-img">
+                <img src="" alt="" id="ft-img">
             </div>
             <div>
                 <div>
-                    <h1 id="ft-titulo">Smash Lab</h1>
+                    <h1 id="ft-titulo">Carregando...</h1>
                     <a href="#" id="fav-icon">
                         <img src="assets/fav_hollow.svg" alt="icone favorito">
                     </a>
@@ -43,91 +43,45 @@
                     </a>
                 </div>
                 <div>
-                    <p id="ft-desc">Os clássicos smash burgers com crosta crocante, muito queijo cheddar derretido,
-                        bacon artesanal e molhos secretos da casa.</p>
+                    <p id="ft-desc"></p>
                 </div>
             </div>
         </section>
+
         <section>
             <div>
                 <h2>O Que Oferece</h2>
-                <p>Hamburgers smash, espaço de lazer, mesas instagramáveis</p>
+                <p id="ft-oferece"></p>
             </div>
             <div>
                 <h2>Local e Horário</h2>
-                <p>
-                    <li>Quarta a Domingo, das 18h30 às 00h00</li>
-                    <li>Parque Central – Estacionamento Sul</li>
-                </p>
+                <ul>
+                    <li id="ft-horario"></li>
+                    <li id="ft-local"></li>
+                </ul>
             </div>
             <div>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3981.404572728052!2d-38.52933769075665!3d-3.721621140904954!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c749b45fe984cb%3A0x6fa3624fe053c7bd!2sR.%20Sen.%20Jaguaribe%2C%20416%20-%20Moura%20Brasil%2C%20Fortaleza%20-%20CE%2C%2060010-010!5e0!3m2!1spt-BR!2sbr!4v1791286273816!5m2!1spt-BR!2sbr"
-                    class="ft-mapa"></iframe>
+                <iframe id="ft-mapa" class="ft-mapa" src="" title="Mapa do food truck"></iframe>
             </div>
         </section>
 
         <!-- Section de Review -->
         <section>
             <div>
-                <input type="text" id="comment-box" placeholder="Digite seu comentário">
-                <!-- <input type="range" min="0.5" max="5" step="0.5" value="2.5" class="star-rating"> -->
+                <input type="text" id="comment-box" placeholder="Digite seu comentário" maxlength="350">
                 <button id="comment-box-submit">Enviar</button>
             </div>
             <div id="comment-box-area">
-                <article class="review-card" id="review-card">
-                    <hr>
-                    <div class="review-photo">
-                        <img src="assets/person.jpeg" alt="foto do usuário">
-                    </div>
-                    <div class="review-nome-estrela-inline">
-                        <div>
-                            <h3 class="titulo">Nome Pessoa</h3>
-                        </div>
-                        <!-- <div>
-                            <img src="" alt="quantidade de reviews">
-                        </div> -->
-                    </div>
-                    <div>
-                        <p class="comentario">Review da pessoa</p>
-                    </div>
-                </article>
+                <!-- cards gerados pelo JavaScript -->
             </div>
         </section>
 
-        <!-- Section de outras recomendações-->
+        <!-- Section de outras recomendações -->
         <section>
             <h3>Você também pode gostar:</h3>
-            <a href="" id="destaque-swap-1">
-                <div class="destaque-card">
-                    <div>
-                        <img src="assets/truck-hamb.jpg" alt="food truck" class="destaque-card-img">
-                    </div>
-                    <div>
-                        <h3>Smash Lab</h3>
-                    </div>
-                </div>
-            </a>
-            <a href="" id="destaque-swap-2">
-                <div class="destaque-card">
-                    <div>
-                        <img src="assets/truck2.jpg" alt="food truck" class="destaque-card-img">
-                    </div>
-                    <div>
-                        <h3>Sweet Truck</h3>
-                    </div>
-                </div>
-            </a>
-            <a href="" id="destaque-swap-3">
-                <div class="destaque-card">
-                    <div>
-                        <img src="assets/truck3.jpg" alt="food truck" class="destaque-card-img">
-                    </div>
-                    <div>
-                        <h3>Dragão Wok</h3>
-                    </div>
-                </div>
-            </a>
+            <div id="ft-recomendacoes">
+                <!-- cards gerados pelo JavaScript -->
+            </div>
         </section>
     </main>
     <footer>
@@ -144,7 +98,7 @@
         </div>
         <p>Truck Place &copy; 2026. Todos os direitos reservados.</p>
     </footer>
-    <script src="javascript/script.js"></script>
+    <script src="javascript/detalhes.js"></script>
 </body>
 
 </html>
