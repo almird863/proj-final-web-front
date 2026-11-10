@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3001';
+const API_URL = 'https://proj-final-web-back.onrender.com';
 
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('pagina');
