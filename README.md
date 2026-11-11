@@ -15,29 +15,43 @@
 
 ### Grupo
 
-- Almir
-- Vânia
-- Max
-
-### Quem é o cliente?
-
-Truck Place
+- Almir Dantas - Javascript
+- Vânia Chaves - HTML
+- Max Alexandre - CSS
 
 ### Qual é o problema?
 
-Falta de conhecimento da população sobre Food Trucks.
+Há uma deficiência de difusão de informações sobre Food Trucks junto à população, em especial quanto à localização, às promoções e à reputação dos estabelecimentos, o que restringe o alcance desses negócios e a descoberta deles pelo consumidor.
 
 ### Qual é o objetivo?
 
-Disseminar informações como localização e promoções sobre Food Trucks e Polos Gastronômicos em Fortaleza de forma acessível.
-
-### Quem é o público?
-
-Jovens de 18 a 55 anos que moram em áreas nobres de Fortaleza e Região Metropolitana, gostam de sair e experimentar novidades e compartilham experiências nas redes sociais.
+Consolidar-se como a principal referência na difusão de informações sobre Food Trucks e Polos Gastronômicos em Fortaleza, centralizando dados como localização, horários e promoções em uma plataforma web acessível, de navegação intuitiva e atualizada de forma dinâmica por meio da integração entre front-end e backend.
 
 ### O que precisa ser desenvolvido?
 
-Aplicativo web de catálogo para apresentação e compartilhamento de informações e reviews de Food Trucks, sustentado por um **backend robusto** que armazena as páginas em banco de dados e as atualiza a partir das requisições HTTP enviadas pelo front-end.
+Aplicação web em formato de catálogo, voltada à apresentação e ao compartilhamento de informações, avaliações e comentários sobre Food Trucks, sustentada por um **backend robusto** que expõe uma API HTTP responsável por exibir dinamicamente o conteúdo exibido ao usuário, garantindo persistência, consistência dos dados e separação clara entre as camadas de apresentação e de regras de negócio.
+
+# Público-Alvo
+
+### Idade e localização
+
+Público adulto na faixa etária de 18 a 55 anos, residente em Fortaleza e na Região Metropolitana (RMF), com concentração em áreas nobres, onde há maior densidade de consumidores com acesso constante a dispositivos conectados e propensão a explorar novas opções gastronômicas.
+
+### Necessidades diárias e hábitos de consumo
+
+Consumidor que adota o hábito de consultar avaliações e comentários de outros usuários como etapa prévia à decisão de consumo, utilizando essas informações para validar a qualidade e a reputação dos estabelecimentos antes de sair de casa. Apresenta perfil exploratório, com propensão a experimentar novidades gastronômicas e a compartilhar suas experiências, o que o torna tanto consumidor quanto produtor de conteúdo dentro da plataforma.
+
+### Comportamentos e interesses pessoais
+
+Apresenta comportamento social e exploratório, com preferência por atividades fora de casa, participação frequente em eventos e interesse recorrente em experimentar novidades gastronômicas. Utiliza ativamente as redes sociais como canal de compartilhamento de vivências, o que amplia a visibilidade espontânea dos estabelecimentos visitados e favorece a disseminação orgânica das informações publicadas na plataforma.
+
+### Poder de compra aproximado
+
+Consumidores pertencentes às classes A e B, com poder aquisitivo de médio a alto, o que se traduz em maior disponibilidade de renda para gastos com lazer e alimentação fora do domicílio, bem como em maior propensão a valorizar qualidade, experiência e reputação do estabelecimento no momento da escolha.
+
+### Forma de utilização da tecnologia
+
+Fazem uso intensivo e contínuo de tecnologia no cotidiano, com destaque para dispositivos móveis e aplicativos, utilizando-os para pesquisa, consulta de avaliações, navegação por mapas e interação em redes sociais.
 
 > [!IMPORTANT]
 > O backend é a parte principal e mais complexa do projeto. Veja a seção [Arquitetura e Backend](#arquitetura-e-backend).
@@ -133,30 +147,6 @@ flowchart LR
 
 ---
 
-# Público-Alvo
-
-### Idade e localização
-
-18 a 55 anos, Fortaleza e Região Metropolitana (RMF).
-
-### Necessidades diárias e hábitos de consumo
-
-Verifica reviews e comentários antes de sair de casa. Gosta de sair e experimentar coisas novas, compartilhar experiências.
-
-### Comportamentos e interesses pessoais
-
-Gosta de sair, experimentar novidades, frequentar eventos e compartilhar experiências nas redes sociais.
-
-### Poder de compra aproximado
-
-Classes A e B, poder de compra médio a alto.
-
-### Forma de utilização da tecnologia
-
-Usam a tecnologia de forma constante.
-
----
-
 # Análise de Concorrentes
 
 ### Identificação do concorrente
@@ -166,36 +156,36 @@ Usam a tecnologia de forma constante.
 
 ### Público aparente
 
-Pessoas de 18 a 55 anos que não querem sair para consumir.
+Usuários adultos na faixa etária de 18 a 55 anos, com perfil voltado à conveniência, que priorizam o consumo sem deslocamento físico e utilizam plataformas digitais para pesquisar, comparar e adquirir produtos e serviços alimentícios a partir de qualquer localização.
 
 ### Estrutura de páginas e interface visual
 
-- Paginação
-- Catálogo
-- Interação e CSS robusto (no caso do iFood)
+- **Paginação:** listagens divididas em páginas sucessivas, o que organiza grandes volumes de resultados e reduz a carga de dados por requisição, embora possa fragmentar a navegação do usuário.
+- **Catálogo:** apresentação estruturada e extensa de estabelecimentos e itens, com informações detalhadas, imagens e atributos padronizados que permitem comparação e consulta rápida.
+- **Interação e CSS robusto (no caso do iFood):** interface visualmente elaborada, com componentes interativos, animações, transições e estilização avançada, que proporcionam uma experiência fluida e consistente entre diferentes dispositivos.
 
 ### Funcionalidades que oferece
 
-- Cadastro de restaurante
-- Pedidos *(não faremos)*
-- Busca e filtro
+- **Cadastro de restaurante:** fluxo de registro que permite ao estabelecimento criar e manter seu perfil na plataforma, com informações cadastrais, cardápio e dados de contato persistidos em banco de dados.
+- **Pedidos *(fora do escopo do Truck Place)*:** processamento transacional de compras e entregas, envolvendo carrinho, pagamento e acompanhamento de status, funcionalidade que não será implementada em nosso projeto por restrição do briefing.
+- **Busca e filtro:** mecanismos de consulta que permitem localizar estabelecimentos por critérios como nome, categoria, localização e avaliação, retornando resultados ordenados e refinados conforme as preferências do usuário.
 
 ### Pontos positivos
 
-- Catálogo extenso
-- Catálogo detalhado
-- Navegação fácil
-- Mapa com os locais
-- Sistema de review robusto
+- **Catálogo extenso:** grande volume de estabelecimentos cadastrados, o que amplia as opções disponíveis ao usuário e reforça a percepção de completude e relevância da plataforma.
+- **Catálogo detalhado:** páginas com informações ricas e padronizadas sobre cada estabelecimento, como descrição, imagens, avaliações e dados de contato, que reduzem a incerteza do consumidor na tomada de decisão.
+- **Navegação fácil:** hierarquia de páginas clara e fluxos intuitivos, que permitem ao usuário alcançar a informação desejada com poucas interações e baixa curva de aprendizado.
+- **Mapa com os locais:** integração com serviços de geolocalização que exibe visualmente a posição dos estabelecimentos, facilitando a descoberta por proximidade e o planejamento do deslocamento.
+- **Sistema de review robusto:** mecanismo estruturado de avaliações e comentários dos usuários, que alimenta a reputação dos estabelecimentos e serve como principal critério de confiança na escolha.
 
 ### Pontos negativos
 
-- Páginas muito simples
-- Pouca interatividade
-- Responsividade fraca
+- **Páginas muito simples:** estrutura visual limitada e pouco elaborada, com baixa riqueza de elementos gráficos e de conteúdo, o que compromete a identidade visual e a percepção de qualidade da plataforma.
+- **Pouca interatividade:** escassez de componentes dinâmicos e de feedback ao usuário, com interações restritas a navegação e consulta, o que reduz o engajamento e a participação ativa na plataforma.
+- **Responsividade fraca:** adaptação insuficiente do layout a diferentes tamanhos de tela e dispositivos, o que prejudica a usabilidade em dispositivos móveis, justamente o principal meio de acesso do público-alvo.
 
 ### Diferenciais do Truck Place
 
-- Reconhecimento de mercado
-- Regionalidade
-- Poucos concorrentes na área
+- **Reconhecimento de mercado:** posicionamento do Truck Place como marca de referência no segmento de Food Trucks, o que gera confiança, favorece a adesão de estabelecimentos e usuários e facilita a divulgação orgânica da plataforma.
+- **Regionalidade:** foco exclusivo em Fortaleza e na Região Metropolitana, o que permite curadoria local, dados geográficos mais precisos e conteúdo alinhado aos hábitos e às preferências do público da região, algo que plataformas de abrangência nacional não oferecem com a mesma profundidade.
+- **Poucos concorrentes na área:** baixa saturação do nicho de Food Trucks e polos gastronômicos, o que reduz a barreira de entrada, amplia as chances de consolidação da plataforma e favorece a fidelização de usuários e comerciantes.
