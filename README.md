@@ -80,10 +80,9 @@ flowchart LR
 
 | Camada | Tecnologia |
 |---|---|
-| Linguagem/Framework | [preencher] |
-| Banco de dados | [preencher] |
-| Autenticação | [preencher] |
-| Upload de imagens | [preencher] |
+| Linguagem/Framework | HTML, CSS, Javascript, Express |
+| Banco de dados | MongoDB |
+| Autenticação | JWL |
 
 ### Endpoints principais
 
@@ -99,7 +98,9 @@ flowchart LR
 
 ### Modelo de dados
 
-[diagrama ER ou lista de tabelas: usuários, comércios, páginas, reviews, comentários, imagens]
+**Usuário:** Nome, email, senha.
+**Página:** Slug, título, descrição, oferece, imagem, horário, local, mapa.
+**Comentários:** Comentário, timestamp
 
 ### Fluxo de uma atualização de página
 
@@ -109,37 +110,27 @@ flowchart LR
 4. Backend grava no banco
 5. Backend responde e o front atualiza a tela
 
-### Como rodar o backend
-
-[passos de instalação, variáveis de ambiente, migrations, comando de start]
-
 ---
 
-# Público-Alvo
-
+## Público Alvo
 ### Idade e localização
-
-18 a 55 anos, Fortaleza e Região Metropolitana (RMF).
+18 à 55 anos, Fortaleza e RMF
 
 ### Necessidades diárias e hábitos de consumo
-
 Verifica reviews e comentários antes de sair de casa. Gosta de sair e experimentar coisas novas, compartilhar experiências.
 
 ### Comportamentos e interesses pessoais
-
 Gosta de sair, experimentar novidades, frequentar eventos e compartilhar experiências nas redes sociais.
 
 ### Poder de compra aproximado
-
-Classes A e B, poder de compra médio a alto.
+Classe A e B, poder de compra médio para alto.
 
 ### Forma de utilização da tecnologia
-
-Usam a tecnologia de forma constante.
+Usam a tecnologia de forma constante
 
 ---
 
-# Análise de Concorrentes
+## Análise de Concorrentes
 
 ### Identificação do concorrente
 
@@ -213,55 +204,3 @@ Primeira metade da 3ª Semana: Late-stage do desenvolvimento do CSS e Javascript
 Segunda Metade da 3ª Semana: Review interno e refinamento da estrutura
 —
 4ª Semana: Entrega
-
-# Público Alvo
-### Idade e localização
-18 à 55 anos, Fortaleza e RMF
-
-### Necessidades diárias e hábitos de consumo
-Verifica reviews e comentários antes de sair de casa. Gosta de sair e experimentar coisas novas, compartilhar experiências.
-
-### Comportamentos e interesses pessoais
-Gosta de sair, experimentar novidades, frequentar eventos e compartilhar experiências nas redes sociais.
-
-### Poder de compra aproximado
-Classe A e B, poder de compra médio para alto.
-
-### Forma de utilização da tecnologia
-Usam a tecnologia de forma constante
-
-
-# Análise de Concorrentes
-### Identificação do concorrente
-iFood
-Trip Advisor
-
-### Público aparente dele
-Pessoas de 18 à 55 anos que não querem sair para consumir
-
-### Estrutura de páginas e interface visual
-Paginação
-Catálogo
-Interação e CSS robusto (no caso do iFood)
-
-### Funcionalidades que ele oferece
-Cadastro de restaurante
-Pedidos (Não poderemos fazer)
-Busca e filtro
-
-### Pontos positivos
-Catálogo extenso
-Catálogo detalhado
-Navegação fácil
-Possui mapa com os locais
-Possui sistema de review robusto
-
-### Pontos negativos
-Páginas muito simples
-Pouca interatividade
-Responsividade fraca
-
-### Diferenciais
-Reconhecimento de mercado
-Regionalidade
-Sem muitos concorrentes na área
