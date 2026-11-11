@@ -120,7 +120,7 @@ flowchart LR
 | Nome | Esquema |
 | --- | --- |
 | Usuario | Nome, Email, Senha |
-| Pagina | slug, titulo, descrição, oferece, imagem, horário, local, mapa |
+| Pagina | Slug, titulo, descrição, oferece, imagem, horário, local, mapa |
 | Comentario | Comentário, Timestamp |
 
 ### Fluxo de uma atualização de página
