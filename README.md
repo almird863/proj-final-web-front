@@ -111,11 +111,11 @@ flowchart LR
 - Concentra as regras de negócio (ex.: apenas Food Trucks com qualificação acima da média)
 - Concentra segurança, validação e autenticação
 
-### Stack do backend
+### Stack do front e backend
 
 | Camada | Tecnologia |
 |---|---|
-| Linguagem/Framework | HTML, CSS, Javascript |
+| Linguagem/Framework | HTML, CSS, Javascript, Express, Mongoose, JWL, express-session, connect-mongo |
 | Banco de dados | MongoDB |
 | Autenticação | JWL |
 
