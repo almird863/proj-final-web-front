@@ -1,5 +1,4 @@
 const formCadastro = document.getElementById('form-cadastro')
-const API_URL = 'https://proj-final-web-back.onrender.com'
 
 formCadastro.addEventListener('submit', (event) => {
     event.preventDefault()
