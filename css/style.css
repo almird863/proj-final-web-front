@@ -1148,6 +1148,11 @@ input:focus-visible {
     text-decoration: underline;
 }
 
+#comment-box-msg {
+    color: #c0392b;
+    font-size: 0.9rem;
+}
+
 /* ========================================
   RESPONSIVIDADE GERAL
 ======================================== */

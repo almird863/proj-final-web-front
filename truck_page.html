@@ -19,8 +19,8 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="pesquisar.html">Pesquisar</a></li>
-                    <li><a href="login.html">LOGIN</a></li>
-                    <li><a href="cadastro.html">CADASTRAR</a></li>
+                    <li id="menu-login"><a href="login.html">LOGIN</a></li>
+                    <li id="menu-cadastro"><a href="cadastro.html">CADASTRAR</a></li>
                 </ul>
             </div>
         </nav>
@@ -71,6 +71,7 @@
                 <input type="text" id="comment-box" placeholder="Digite seu comentário" maxlength="350">
                 <button id="comment-box-submit">Enviar</button>
             </div>
+            <p id="comment-box-msg" aria-live="polite"></p>
             <div id="comment-box-area">
                 <!-- cards gerados pelo JavaScript -->
             </div>
@@ -98,7 +99,11 @@
         </div>
         <p>Truck Place &copy; 2026. Todos os direitos reservados.</p>
     </footer>
+
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/menu.js"></script>
     <script src="javascript/detalhes.js"></script>
+
 </body>
 
 </html>

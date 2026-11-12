@@ -20,25 +20,26 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="pesquisar.html">Pesquisar</a></li>
                     <li><a href="#categorias">Categorias</a></li>
-                    <li><a href="login.html">LOGIN</a></li>
-                    <li><a href="cadastro.html">CADASTRAR</a></li>
+                    <li id="menu-login"><a href="login.html">LOGIN</a></li>
+                    <li id="menu-cadastro"><a href="cadastro.html">CADASTRAR</a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    
+
     <main class="login-background">
         <div class="login-container">
             <h2>Seja bem vindo</h2>
             <form id="form-login">
                 <input type="email" id="form-login-nome" placeholder="E-mail">
                 <input type="password" id="form-login-senha" placeholder="Senha">
-                <input type="submit" value="ENTRAR">
+                <p id="form-login-msg" aria-live="polite"></p>
+                <input type="submit" id="form-login-btn" value="ENTRAR">
             </form>
             <span>Não tem uma conta? <a href="cadastro.html">Faça o cadastro</a></span>
         </div>
     </main>
-    
+
     <footer>
         <div>
             <a href="">
@@ -53,7 +54,9 @@
         </div>
         <p>Truck Place &copy; 2026. Todos os direitos reservados.</p>
     </footer>
-    
+
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/menu.js"></script>
     <script src="javascript/login.js"></script>
 
 </body>
