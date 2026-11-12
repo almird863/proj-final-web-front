@@ -3,7 +3,6 @@ const itens = document.querySelectorAll('.pesq-ul-item');
 //
 const commentBtn = document.getElementById('comment-box-submit');
 //
-const API_URL = 'https://proj-final-web-back.onrender.com';
 
 function criarCard(pagina) {
     const card = document.createElement('div');
