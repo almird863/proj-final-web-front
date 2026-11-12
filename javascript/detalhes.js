@@ -71,7 +71,7 @@ function preencherComentarios(lista) {
     area.textContent = '';
 
     if (lista.length === 0) {
-        area.appendChild(el('p', null, 'Seja o primeiro a comentar.'));
+        area.appendChild(el('p', 'sem-comentarios', 'Seja o primeiro a comentar.'));
         return;
     }
     lista.forEach((c) => area.appendChild(criarComentario(c)));
@@ -117,3 +117,61 @@ async function carregarDetalhes() {
 }
 
 carregarDetalhes();
+
+const campoComentario = document.getElementById('comment-box');
+const btnEnviar = document.getElementById('comment-box-submit');
+const msgComentario = document.getElementById('comment-box-msg');
+
+async function enviarComentario() {
+    msgComentario.textContent = '';
+
+    if (!estaLogado()) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const texto = campoComentario.value.trim();
+
+    if (!texto) {
+        msgComentario.textContent = 'Digite um comentário antes de enviar.';
+        return;
+    }
+
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = 'Enviando...';
+
+    try {
+        const resposta = await fetchAutenticado(
+            `${API_URL}/comentarios/${encodeURIComponent(slug)}`,
+            {
+                method: 'POST',
+                body: JSON.stringify({ comentario: texto })
+            }
+        );
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            msgComentario.textContent = dados.message || 'Não foi possível enviar o comentário.';
+            return;
+        }
+
+        const area = document.getElementById('comment-box-area');
+        const aviso = area.querySelector('.sem-comentarios');
+        if (aviso) aviso.remove();
+
+        area.prepend(criarComentario(dados));
+        campoComentario.value = '';
+    } catch (err) {
+        msgComentario.textContent = 'Erro de conexão com o servidor.';
+    } finally {
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Enviar';
+    }
+}
+
+btnEnviar.addEventListener('click', enviarComentario);
+
+campoComentario.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') enviarComentario();
+});
