@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truck Place | Meu perfil</title>
+</head>
+
+<body>
+    <header class="main-header">
+        <a href="index.html">
+            <img src="assets/tp-logo.png" alt="">
+            <h1 class="hide-text">Truck Place</h1>
+        </a>
+        <nav>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="pesquisar.html">Pesquisar</a></li>
+                    <li id="menu-login"><a href="login.html">LOGIN</a></li>
+                    <li id="menu-cadastro"><a href="cadastro.html">CADASTRAR</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="perfil-background">
+        <div class="perfil-container">
+
+            <!-- Resumo do usuário -->
+            <section class="perfil-resumo">
+                <div class="perfil-avatar">
+                    <img src="assets/person.jpeg" alt="foto do usuário" id="perfil-foto">
+                </div>
+                <div>
+                    <h2 id="perfil-titulo">Meu perfil</h2>
+                    <p id="perfil-subtitulo"></p>
+                </div>
+            </section>
+
+            <!-- Dados pessoais -->
+            <section class="perfil-secao">
+                <div class="perfil-secao-topo">
+                    <h3>Dados pessoais</h3>
+                    <button type="button" id="perfil-btn-editar">Editar</button>
+                </div>
+
+                <form id="form-perfil" novalidate>
+                    <div class="campo">
+                        <label for="perfil-nome">Nome</label>
+                        <input type="text" id="perfil-nome" name="nome" maxlength="80" autocomplete="name" disabled>
+                    </div>
+
+                    <div class="campo">
+                        <label for="perfil-email">E-mail</label>
+                        <input type="email" id="perfil-email" name="email" autocomplete="email" disabled>
+                    </div>
+
+                    <p id="perfil-msg" class="form-msg" aria-live="polite"></p>
+
+                    <div class="perfil-acoes" id="perfil-acoes-edicao" hidden>
+                        <button type="submit" id="perfil-btn-salvar">Salvar alterações</button>
+                        <button type="button" id="perfil-btn-cancelar">Cancelar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Alterar senha -->
+            <section class="perfil-secao">
+                <div class="perfil-secao-topo">
+                    <h3>Alterar senha</h3>
+                </div>
+
+                <form id="form-senha" novalidate>
+                    <div class="campo">
+                        <label for="senha-atual">Senha atual</label>
+                        <input type="password" id="senha-atual" name="senhaAtual" autocomplete="current-password">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha-nova">Nova senha</label>
+                        <input type="password" id="senha-nova" name="senhaNova" autocomplete="new-password">
+                    </div>
+
+                    <div class="campo">
+                        <label for="senha-confirmar">Confirmar nova senha</label>
+                        <input type="password" id="senha-confirmar" name="senhaConfirmar" autocomplete="new-password">
+                    </div>
+
+                    <p id="senha-msg" class="form-msg" aria-live="polite"></p>
+
+                    <div class="perfil-acoes">
+                        <button type="submit" id="senha-btn-salvar">Atualizar senha</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Zona de perigo -->
+            <section class="perfil-secao perfil-perigo">
+                <div class="perfil-secao-topo">
+                    <h3>Excluir conta</h3>
+                </div>
+                <p>Essa ação é permanente e não pode ser desfeita.</p>
+                <button type="button" id="perfil-btn-excluir">Excluir minha conta</button>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <a href="index.html">
+                <img src="assets/tp-logo.png" alt="logo truck place">
+            </a>
+        </div>
+        <div>
+            <ul>
+                <li>(85) 9 9999-8888</li>
+                <li>contato@truckplace.com</li>
+            </ul>
+        </div>
+        <p>Truck Place &copy; 2026. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/menu.js"></script>
+    <script src="javascript/perfil.js"></script>
+
+</body>
