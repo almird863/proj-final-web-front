@@ -11,6 +11,7 @@ function el(tag, className, texto) {
 
 function criarComentario(c) {
     const article = el('article', 'review-card');
+    article.dataset.id = c._id;
     article.appendChild(document.createElement('hr'));
 
     const foto = el('div', 'review-photo');
@@ -28,6 +29,26 @@ function criarComentario(c) {
     divTexto.appendChild(el('p', 'comentario', c.comentario));
 
     article.append(foto, nomeBox, divTexto);
+
+    // Botões só para o dono do comentário
+    const usuario = getUsuario();
+    const ehDono = estaLogado() && c.autor && usuario && c.autor._id === usuario.id;
+
+    if (ehDono) {
+        const acoes = el('div', 'review-acoes');
+
+        const btnEditar = el('button', 'btn-editar', 'Editar');
+        btnEditar.type = 'button';
+        btnEditar.addEventListener('click', () => iniciarEdicao(article, c));
+
+        const btnDeletar = el('button', 'btn-deletar', 'Deletar');
+        btnDeletar.type = 'button';
+        btnDeletar.addEventListener('click', () => deletarComentario(article, c._id));
+
+        acoes.append(btnEditar, btnDeletar);
+        article.appendChild(acoes);
+    }
+
     return article;
 }
 
@@ -49,6 +70,98 @@ function criarRecomendacao(p) {
     card.append(divImg, divTitulo);
     link.appendChild(card);
     return link;
+}
+
+async function deletarComentario(article, id) {
+    if (!confirm('Deseja realmente deletar este comentário?')) return;
+
+    try {
+        const resposta = await fetchAutenticado(`${API_URL}/comentarios/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!resposta.ok) {
+            const dados = await resposta.json();
+            alert(dados.message || 'Não foi possível deletar.');
+            return;
+        }
+
+        article.remove();
+
+        const area = document.getElementById('comment-box-area');
+        if (!area.querySelector('.review-card')) {
+            area.appendChild(el('p', 'sem-comentarios', 'Seja o primeiro a comentar.'));
+        }
+    } catch (err) {
+        alert('Erro de conexão com o servidor.');
+    }
+}
+
+function iniciarEdicao(article, c) {
+    const pTexto = article.querySelector('.comentario');
+    const acoes = article.querySelector('.review-acoes');
+
+    const campo = document.createElement('input');
+    campo.type = 'text';
+    campo.className = 'comentario-edicao';
+    campo.maxLength = 350;
+    campo.value = pTexto.textContent;
+
+    const btnSalvar = el('button', 'btn-salvar', 'Salvar');
+    btnSalvar.type = 'button';
+    const btnCancelar = el('button', 'btn-cancelar', 'Cancelar');
+    btnCancelar.type = 'button';
+    const msg = el('p', 'msg-edicao');
+
+    // Troca o texto por um campo e os botões por Salvar/Cancelar
+    pTexto.replaceWith(campo);
+    acoes.style.display = 'none';
+
+    const edicao = el('div', 'review-acoes');
+    edicao.append(btnSalvar, btnCancelar, msg);
+    article.appendChild(edicao);
+    campo.focus();
+
+    function cancelar() {
+        campo.replaceWith(pTexto);
+        edicao.remove();
+        acoes.style.display = '';
+    }
+
+    btnCancelar.addEventListener('click', cancelar);
+
+    btnSalvar.addEventListener('click', async () => {
+        const novoTexto = campo.value.trim();
+
+        if (!novoTexto) {
+            msg.textContent = 'O comentário não pode estar vazio.';
+            return;
+        }
+
+        btnSalvar.disabled = true;
+
+        try {
+            const resposta = await fetchAutenticado(`${API_URL}/comentarios/${c._id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ comentario: novoTexto })
+            });
+
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                msg.textContent = dados.message || 'Não foi possível editar.';
+                return;
+            }
+
+            pTexto.textContent = dados.comentario;
+            c.comentario = dados.comentario;
+            cancelar();
+        } catch (err) {
+            msg.textContent = 'Erro de conexão com o servidor.';
+        } finally {
+            btnSalvar.disabled = false;
+        }
+    });
 }
 
 function preencherPagina(p) {

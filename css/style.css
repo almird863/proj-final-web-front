@@ -1153,6 +1153,40 @@ input:focus-visible {
     font-size: 0.9rem;
 }
 
+.review-acoes {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.review-acoes button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px 0;
+}
+
+.btn-editar,
+.btn-salvar { color: #2c7be5; }
+
+.btn-deletar { color: #c0392b; }
+
+.btn-cancelar { color: #666; }
+
+.comentario-edicao {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.msg-edicao {
+    color: #c0392b;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
 /* ========================================
   RESPONSIVIDADE GERAL
 ======================================== */
