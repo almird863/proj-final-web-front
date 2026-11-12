@@ -1,6 +1,28 @@
-/* ========================================
-   1. VARIÁVEIS E CONFIGURAÇÕES GERAIS
-======================================== */
+/* ==========================================================================
+   TRUCK PLACE - FOLHA DE ESTILOS
+
+   ÍNDICE
+   01. Variáveis
+   02. Reset e base
+   03. Cabeçalho e menu
+   04. Hero (home)
+   05. Títulos de seção
+   06. Cards de food truck (compartilhado: home, pesquisa, recomendações)
+   07. Home: destaques
+   08. Home: categorias
+   09. Rodapé
+   10. Página de pesquisa
+   11. Página de detalhes
+   12. Comentários (cards, botões editar/deletar)
+   13. Login e cadastro
+   14. Acessibilidade
+   15. Responsivo
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. VARIÁVEIS
+   ========================================================================== */
 
 :root {
     --cor-principal: #f64141;
@@ -9,15 +31,29 @@
     --cor-fundo: #fff8f2;
     --cor-branca: #ffffff;
     --cor-texto: #44403c;
+    --cor-texto-suave: #78716c;
     --cor-texto-claro: #a8a29e;
     --cor-borda: #e7e0da;
+    --cor-placeholder: #e7e0da;
+
+    --cor-perigo: #c0392b;
+    --cor-perigo-fundo: #fdecea;
+    --cor-perigo-borda: #f5c6c0;
 
     --sombra: 0 5px 20px rgba(41, 37, 36, 0.08);
     --sombra-hover: 0 12px 28px rgba(41, 37, 36, 0.15);
 
     --raio: 12px;
+    --raio-botao: 8px;
     --transicao: 0.3s ease;
+
+    --espaco-lateral: 8%;
 }
+
+
+/* ==========================================================================
+   02. RESET E BASE
+   ========================================================================== */
 
 * {
     margin: 0;
@@ -61,19 +97,22 @@ a {
     -webkit-tap-highlight-color: transparent;
 }
 
-
-/* ========================================
-   2. CABEÇALHO E MENU
-======================================== */
-
 .hide-text {
     display: none;
 }
 
+
+/* ==========================================================================
+   03. CABEÇALHO E MENU
+   ========================================================================== */
+
 .main-header {
+    position: relative;
+    z-index: 10;
+
     width: 100%;
     min-height: 80px;
-    padding: 18px 8%;
+    padding: 18px var(--espaco-lateral);
 
     display: flex;
     justify-content: space-between;
@@ -82,9 +121,6 @@ a {
 
     background-color: var(--cor-escura);
     color: var(--cor-branca);
-
-    position: relative;
-    z-index: 10;
 }
 
 .main-header img {
@@ -119,7 +155,7 @@ a {
 
 .menu a {
     display: inline-block;
-    color: white;
+    color: var(--cor-branca);
     transition: color var(--transicao);
 }
 
@@ -129,24 +165,20 @@ a {
 }
 
 
-/* ========================================
-   3. ÁREA DE PESQUISA (HERO - HOME)
-======================================== */
+/* ==========================================================================
+   04. HERO (HOME)
+   ========================================================================== */
 
 .hero {
     min-height: 360px;
-    padding: 40px 8%;
+    padding: 40px var(--espaco-lateral);
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     background:
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(207, 123, 62, 0.4),
-            transparent 35%
-        ),
+        radial-gradient(circle at 85% 20%, rgba(207, 123, 62, 0.4), transparent 35%),
         var(--cor-principal);
 }
 
@@ -160,7 +192,7 @@ a {
     color: var(--cor-texto);
 
     border: 2px solid transparent;
-    border-radius: 8px 0 0 8px;
+    border-radius: var(--raio-botao) 0 0 var(--raio-botao);
     outline: none;
 
     transition: border-color var(--transicao);
@@ -178,7 +210,7 @@ a {
     padding: 16px 25px;
 
     border: none;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 var(--raio-botao) var(--raio-botao) 0;
 
     background-color: var(--cor-escura);
     color: var(--cor-branca);
@@ -186,9 +218,7 @@ a {
     font-weight: 700;
     cursor: pointer;
 
-    transition:
-        background-color var(--transicao),
-        transform var(--transicao);
+    transition: background-color var(--transicao), transform var(--transicao);
 }
 
 .hero button:hover {
@@ -200,13 +230,12 @@ a {
 }
 
 
-/* ========================================
-   4. TÍTULOS DAS SEÇÕES
-======================================== */
+/* ==========================================================================
+   05. TÍTULOS DE SEÇÃO
+   ========================================================================== */
 
 .destaque-grid h2,
 #categorias h2 {
-    position: relative;
     width: fit-content;
     margin: 0 auto 40px;
 
@@ -230,78 +259,29 @@ a {
 }
 
 
-/* ========================================
-   5. SEÇÃO DE DESTAQUES (HOME)
-======================================== */
+/* ==========================================================================
+   06. CARDS DE FOOD TRUCK (COMPARTILHADO)
 
-.destaque-grid {
-    padding: 70px 8%;
-}
+   Estrutura A (home e pesquisa):
+     .destaque-card > a > div (imagem) + div (texto, com h3, p e ul)
 
-#lista-destaques {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 25px;
-}
-
-/* Card: ocupa a altura da célula da grid */
-.destaque-card {
-    display: flex;
-}
-
-.destaque-card > a {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-/* Imagem mantém o tamanho */
-.destaque-card-imagem {
-    flex: 0 0 auto;
-}
-
-/* Texto ocupa o resto da altura */
-.destaque-card-texto {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-/* Horário e local vão para o final do card */
-.destaque-card-texto ul {
-    margin-top: auto;
-}
-
-@media (max-width: 1024px) {
-    #lista-destaques {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 600px) {
-    #lista-destaques {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* ========================================
-    6. CARDS DOS FOOD TRUCKS
-======================================== */
+   Estrutura B (recomendações na página de detalhes):
+     a > .destaque-card > div (imagem) + div (título)
+   ========================================================================== */
 
 .destaque-card {
     min-width: 0;
     overflow: hidden;
 
+    display: flex;
+    flex-direction: column;
+
     background-color: var(--cor-branca);
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
-
     box-shadow: var(--sombra);
 
-    transition:
-        transform var(--transicao),
-        box-shadow var(--transicao);
+    transition: transform var(--transicao), box-shadow var(--transicao);
 }
 
 .destaque-card:hover {
@@ -309,24 +289,26 @@ a {
     box-shadow: var(--sombra-hover);
 }
 
-/* Garante que o link ocupe todo o card e remova estilos padrão */
+/* Estrutura A: o link ocupa o card inteiro */
 .destaque-card > a {
-    display: block;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     color: inherit;
-    text-decoration: none;
 }
 
-.destaque-card a > div:first-child {
+/* Imagem */
+.destaque-card > a > div:first-child,
+.destaque-card > div:first-child {
+    flex: 0 0 auto;
     overflow: hidden;
-    background-color: #e7e0da;
+    background-color: var(--cor-placeholder);
 }
 
 .destaque-card-img {
     width: 100%;
     height: 190px;
-
     object-fit: cover;
-
     transition: transform 0.5s ease;
 }
 
@@ -334,8 +316,17 @@ a {
     transform: scale(1.05);
 }
 
-.destaque-card a > div:last-child {
+/* Texto (estrutura A): ocupa o resto da altura, empurrando horário/local para o fim */
+.destaque-card > a > div:last-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
+}
+
+/* Título (estrutura B) */
+.destaque-card > div:last-child {
+    padding: 16px 20px;
 }
 
 .destaque-card h3 {
@@ -349,11 +340,12 @@ a {
 .destaque-card p {
     margin-bottom: 15px;
 
-    color: #78716c;
+    color: var(--cor-texto-suave);
     font-size: 14px;
 }
 
 .destaque-card ul {
+    margin-top: auto;
     padding-top: 12px;
     border-top: 1px solid var(--cor-borda);
 }
@@ -370,12 +362,33 @@ a {
 }
 
 
-/* ========================================
-   7. SEÇÃO DE CATEGORIAS (HOME)
-======================================== */
+/* ==========================================================================
+   07. HOME: DESTAQUES
+   ========================================================================== */
+
+.destaque-grid {
+    padding: 70px var(--espaco-lateral);
+}
+
+#lista-destaques {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+}
+
+/* Mensagens de "Carregando..." e erro ocupam a linha toda */
+#lista-destaques .mensagem {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   08. HOME: CATEGORIAS
+   ========================================================================== */
 
 #categorias {
-    padding: 70px 8%;
+    padding: 70px var(--espaco-lateral);
     background-color: var(--cor-branca);
 }
 
@@ -394,23 +407,22 @@ a {
 
 .card-categoria {
     height: 100%;
+    padding: 16px;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
 
     background-color: var(--cor-fundo);
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
-
     box-shadow: var(--sombra);
 
     transition:
         transform var(--transicao),
         box-shadow var(--transicao),
         border-color var(--transicao);
-
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    gap: 16px;
 }
 
 .card-categoria:hover {
@@ -423,9 +435,9 @@ a {
     flex-shrink: 0;
     width: 70px;
     height: 70px;
-    border-radius: 12px;
     overflow: hidden;
-    background-color: #e7e0da;
+    border-radius: var(--raio);
+    background-color: var(--cor-placeholder);
 }
 
 .card-categoria img {
@@ -456,17 +468,17 @@ a {
 }
 
 
-/* ========================================
-   8. RODAPÉ
-======================================== */
+/* ==========================================================================
+   09. RODAPÉ
+   ========================================================================== */
 
 footer {
+    padding: 45px var(--espaco-lateral) 25px;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: 30px;
-
-    padding: 45px 8% 25px;
 
     background-color: var(--cor-escura);
     color: var(--cor-branca);
@@ -514,36 +526,16 @@ footer p {
 }
 
 
-/* ========================================
-   9. ACESSIBILIDADE
-======================================== */
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible {
-    outline: 3px solid var(--cor-secundaria);
-    outline-offset: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-    }
-}
-
-
-/* ========================================
-   10. PÁGINA DE PESQUISA (PESQUISAR.HTML)
-======================================== */
+/* ==========================================================================
+   10. PÁGINA DE PESQUISA
+   ========================================================================== */
 
 .pag-pesquisa {
-    padding: 40px 8% 20px;
+    padding: 40px var(--espaco-lateral) 20px;
+
     display: flex;
     justify-content: center;
+
     background-color: var(--cor-fundo);
 }
 
@@ -551,13 +543,17 @@ input:focus-visible {
     width: 100%;
     max-width: 600px;
     padding: 16px 20px;
+
     background-color: var(--cor-branca);
     color: var(--cor-texto);
+
     border: 2px solid var(--cor-borda);
     border-radius: var(--raio);
     outline: none;
+
     font-size: 16px;
     box-shadow: var(--sombra);
+
     transition: border-color var(--transicao), box-shadow var(--transicao);
 }
 
@@ -571,99 +567,45 @@ input:focus-visible {
 }
 
 .pag-pesquisa-main > section {
-    padding: 30px 8% 70px;
+    padding: 30px var(--espaco-lateral) 70px;
     background-color: var(--cor-fundo);
 }
 
+#pesq-msg {
+    margin-bottom: 20px;
+    color: var(--cor-texto-suave);
+    text-align: center;
+}
+
+#pesq-msg:empty {
+    display: none;
+}
+
+/* Os cards da pesquisa usam .destaque-card (seção 06) */
 .ul-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 25px;
 }
 
-.pesq-ul-item a {
-    min-width: 0;
-    height: 100%;
-    overflow: hidden;
-    background-color: var(--cor-branca);
-    border: 1px solid var(--cor-borda);
-    border-radius: var(--raio);
-    box-shadow: var(--sombra);
-    transition: transform var(--transicao), box-shadow var(--transicao);
-    display: flex;
-    flex-direction: column;
-}
 
-.pesq-ul-item a:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--sombra-hover);
-}
+/* ==========================================================================
+   11. PÁGINA DE DETALHES
+   Escopada por .page-detalhes no <body>.
+   section 1 = imagem e descrição | 2 = informações e mapa
+   section 3 = comentários        | 4 = recomendações
+   ========================================================================== */
 
-.pesq-ul-item > div:first-child {
-    overflow: hidden;
-    background-color: #e7e0da;
-}
-
-.pesq-ul-item img {
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.pesq-ul-item a:hover img {
-    transform: scale(1.05);
-}
-
-.pesq-ul-item a > div:last-child {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.pesq-ul-item h3 {
-    margin-bottom: 8px;
-    color: var(--cor-escura);
-    font-size: 20px;
-    font-weight: 800;
-}
-
-.pesq-ul-item p {
-    margin-bottom: 15px;
-    color: #78716c;
-    font-size: 14px;
-}
-
-.pesq-ul-item ul {
-    margin-top: auto;
-    padding-top: 12px;
-    border-top: 1px solid var(--cor-borda);
-    list-style: none;
-}
-
-.pesq-ul-item li {
-    margin-bottom: 7px;
-    color: var(--cor-texto);
-    font-size: 13px;
-}
-
-.pesq-ul-item li:last-child {
-    margin-bottom: 0;
-}
-
-
-/* ========================================
-   11. PÁGINA DO FOOD TRUCK (DETALHES)
-   (Isoladas com a classe .page-detalhes no body ou container)
-======================================== */
+/* --- Seção 1: imagem, título e descrição --- */
 
 .page-detalhes main > section:nth-of-type(1) {
-    padding: 60px 8%;
+    padding: 60px var(--espaco-lateral);
+
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
     align-items: center;
+    gap: 40px;
+
     background-color: var(--cor-fundo);
 }
 
@@ -671,7 +613,7 @@ input:focus-visible {
     overflow: hidden;
     border-radius: var(--raio);
     box-shadow: var(--sombra);
-    background-color: #e7e0da;
+    background-color: var(--cor-placeholder);
 }
 
 #ft-img {
@@ -681,11 +623,12 @@ input:focus-visible {
 }
 
 .page-detalhes main > section:nth-of-type(1) > div:last-child > div:first-child {
+    margin-bottom: 15px;
+
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
     flex-wrap: wrap;
+    gap: 15px;
 }
 
 #ft-titulo {
@@ -709,24 +652,29 @@ input:focus-visible {
 }
 
 #ft-desc {
-    color: #78716c;
+    color: var(--cor-texto-suave);
     font-size: 16px;
     line-height: 1.7;
 }
 
+/* --- Seção 2: informações e mapa --- */
+
 .page-detalhes main > section:nth-of-type(2) {
-    padding: 50px 8%;
-    background-color: var(--cor-branca);
+    padding: 50px var(--espaco-lateral);
+
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+
+    background-color: var(--cor-branca);
 }
 
 .page-detalhes main > section:nth-of-type(2) > div {
+    padding: 25px;
+
     background-color: var(--cor-fundo);
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
-    padding: 25px;
     box-shadow: var(--sombra);
 }
 
@@ -737,51 +685,65 @@ input:focus-visible {
 }
 
 .page-detalhes main > section:nth-of-type(2) h2 {
+    margin-bottom: 10px;
+
     color: var(--cor-escura);
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 10px;
 }
 
-.page-detalhes main > section:nth-of-type(2) p {
+.page-detalhes main > section:nth-of-type(2) p,
+.page-detalhes main > section:nth-of-type(2) li {
     color: var(--cor-texto);
     font-size: 14px;
 }
 
+.page-detalhes main > section:nth-of-type(2) li + li {
+    margin-top: 6px;
+}
+
 .ft-mapa {
+    display: block;
     width: 100%;
     height: 350px;
     border: none;
-    display: block;
 }
 
+/* --- Seção 3: comentários (formulário; cards na seção 12) --- */
+
 .page-detalhes main > section:nth-of-type(3) {
-    padding: 60px 8%;
+    padding: 60px var(--espaco-lateral);
     background-color: var(--cor-fundo);
 }
 
+/* Caixa de novo comentário */
 .page-detalhes main > section:nth-of-type(3) > div:first-child {
-    display: flex;
-    gap: 15px;
-    align-items: center;
     margin-bottom: 40px;
-    background-color: var(--cor-branca);
     padding: 20px;
-    border-radius: var(--raio);
-    border: 1px solid var(--cor-borda);
-    box-shadow: var(--sombra);
+
+    display: flex;
+    align-items: center;
     flex-wrap: wrap;
+    gap: 15px;
+
+    background-color: var(--cor-branca);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
 }
 
 #comment-box {
     flex: 1;
     min-width: 250px;
     padding: 14px 18px;
-    border: 2px solid var(--cor-borda);
-    border-radius: 8px;
-    outline: none;
-    font-size: 15px;
+
     color: var(--cor-texto);
+    font-size: 15px;
+
+    border: 2px solid var(--cor-borda);
+    border-radius: var(--raio-botao);
+    outline: none;
+
     transition: border-color var(--transicao);
 }
 
@@ -789,19 +751,18 @@ input:focus-visible {
     border-color: var(--cor-principal);
 }
 
-.star-rating {
-    cursor: pointer;
-    accent-color: var(--cor-secundaria);
-}
-
 #comment-box-submit {
     padding: 14px 25px;
+
     background-color: var(--cor-escura);
     color: var(--cor-branca);
+
     border: none;
-    border-radius: 8px;
+    border-radius: var(--raio-botao);
+
     font-weight: 700;
     cursor: pointer;
+
     transition: background-color var(--transicao);
 }
 
@@ -809,20 +770,100 @@ input:focus-visible {
     background-color: var(--cor-secundaria);
 }
 
+#comment-box-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mensagem de erro do envio: linha própria dentro da caixa */
+#comment-box-msg {
+    flex-basis: 100%;
+    margin: 0;
+
+    color: var(--cor-perigo);
+    font-size: 0.9rem;
+}
+
+#comment-box-msg:empty {
+    display: none;
+}
+
+.star-rating {
+    cursor: pointer;
+    accent-color: var(--cor-secundaria);
+}
+
+/* --- Seção 4: recomendações ("Você também pode gostar") --- */
+
+.page-detalhes main > section:nth-of-type(4) {
+    padding: 60px var(--espaco-lateral);
+    background-color: var(--cor-branca);
+}
+
+.page-detalhes main > section:nth-of-type(4) > h3 {
+    margin-bottom: 30px;
+
+    color: var(--cor-escura);
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+}
+
+#ft-recomendacoes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+#ft-recomendacoes > a {
+    display: block;
+    border-radius: var(--raio);
+}
+
+#ft-recomendacoes .destaque-card {
+    height: 100%;
+}
+
+
+/* ==========================================================================
+   12. COMENTÁRIOS
+
+   Estrutura gerada pelo JavaScript:
+   article.review-card
+     hr (oculto)
+     .review-photo
+     .review-nome-estrela-inline   (nome do autor)
+     div                           (texto do comentário)
+     .review-acoes                 (botões, só para o dono)
+
+   Layout em grid: foto | nome + texto | botões (à direita)
+   ========================================================================== */
+
 .review-card {
+    margin-bottom: 20px;
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+        "foto nome  acoes"
+        "foto texto acoes";
+    column-gap: 20px;
+    row-gap: 4px;
+    align-items: center;
+
     background-color: var(--cor-branca);
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
-    padding: 20px;
-    margin-bottom: 20px;
     box-shadow: var(--sombra);
-    display: flex;
-    gap: 20px;
-    align-items: center;
 }
 
 .review-card hr {
     display: none;
+}
+
+.review-photo {
+    grid-area: foto;
 }
 
 .review-photo img {
@@ -830,14 +871,15 @@ input:focus-visible {
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #e7e0da;
+    background-color: var(--cor-placeholder);
 }
 
 .review-nome-estrela-inline {
+    grid-area: nome;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
 }
 
 .review-nome-estrela-inline h3 {
@@ -851,176 +893,151 @@ input:focus-visible {
     object-fit: contain;
 }
 
+/* Div do texto: a única filha direta sem classe */
+.review-card > div:not([class]) {
+    grid-area: texto;
+    min-width: 0;
+}
+
 .review-card p {
     color: var(--cor-texto);
     font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
-.page-detalhes main > section:nth-of-type(4) {
-    padding: 60px 8%;
-    background-color: var(--cor-branca);
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 25px;
-}
-
-.page-detalhes main > section:nth-of-type(4) > h3 {
-    grid-column: 1 / -1;
-    color: var(--cor-escura);
-    font-size: 26px;
-    font-weight: 800;
-    margin-bottom: 30px;
+.sem-comentarios {
+    padding: 20px 0;
+    color: var(--cor-texto-suave);
     text-align: center;
 }
 
-.page-detalhes main > section:nth-of-type(4) > a {
-    display: block;
-    border-radius: var(--raio);
-    text-decoration: none;
-}
+/* --- Botões de ação (editar, deletar, salvar, cancelar) --- */
 
-.page-detalhes main > section:nth-of-type(4) .destaque-card {
-    height: 100%;
-}
-
-/* ========================================
-   12. PÁGINA DE LOGIN
-======================================== */
-
-.login-background {
-    min-height: calc(100vh - 80px);
-    padding: 40px 5%;
+.review-acoes {
+    grid-area: acoes;
 
     display: flex;
-    justify-content: center;
     align-items: center;
-
-    background:
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(207, 123, 62, 0.4),
-            transparent 35%
-        ),
-        var(--cor-principal);
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.login-container {
-    width: 100%;
-    max-width: 400px;
-    padding: 40px 32px;
+.review-acoes button {
+    padding: 8px 16px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    border: 1.5px solid transparent;
+    border-radius: var(--raio-botao);
 
-    background-color: var(--cor-branca);
-    border: 1px solid var(--cor-borda);
-    border-radius: var(--raio);
-    box-shadow: var(--sombra-hover);
-}
-
-.login-container h2 {
-    color: var(--cor-escura);
-    font-size: 26px;
-    font-weight: 800;
-    text-align: center;
-}
-
-.login-container h2::after {
-    content: "";
-    display: block;
-
-    width: 55px;
-    height: 4px;
-    margin: 10px auto 0;
-
-    background-color: var(--cor-principal);
-    border-radius: 10px;
-}
-
-#form-login {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-#form-login-nome,
-#form-login-senha {
-    width: 100%;
-    padding: 14px 18px;
-
-    background-color: var(--cor-branca);
-    color: var(--cor-texto);
-
-    border: 2px solid var(--cor-borda);
-    border-radius: 8px;
-    outline: none;
-
-    font-size: 15px;
-    transition:
-        border-color var(--transicao),
-        box-shadow var(--transicao);
-}
-
-#form-login-nome::placeholder,
-#form-login-senha::placeholder {
-    color: var(--cor-texto-claro);
-}
-
-#form-login-nome:focus,
-#form-login-senha:focus {
-    border-color: var(--cor-principal);
-    box-shadow: var(--sombra);
-}
-
-#form-login input[type="submit"] {
-    width: 100%;
-    margin-top: 6px;
-    padding: 14px 25px;
-
-    background-color: var(--cor-escura);
-    color: var(--cor-branca);
-
-    border: none;
-    border-radius: 8px;
-
+    font-size: 13px;
     font-weight: 700;
+    line-height: 1;
     cursor: pointer;
 
     transition:
         background-color var(--transicao),
-        transform var(--transicao);
+        color var(--transicao),
+        border-color var(--transicao),
+        transform 0.15s ease;
 }
 
-#form-login input[type="submit"]:hover {
+.review-acoes button:active {
+    transform: scale(0.96);
+}
+
+.review-acoes button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Editar: contorno neutro, escurece no hover */
+.btn-editar {
+    background-color: var(--cor-branca);
+    color: var(--cor-escura);
+    border-color: var(--cor-borda);
+}
+
+.btn-editar:hover {
+    background-color: var(--cor-escura);
+    color: var(--cor-branca);
+    border-color: var(--cor-escura);
+}
+
+/* Deletar: fundo avermelhado, vira vermelho sólido no hover */
+.btn-deletar {
+    background-color: var(--cor-perigo-fundo);
+    color: var(--cor-perigo);
+    border-color: var(--cor-perigo-borda);
+}
+
+.btn-deletar:hover {
+    background-color: var(--cor-perigo);
+    color: var(--cor-branca);
+    border-color: var(--cor-perigo);
+}
+
+/* Salvar: botão principal */
+.btn-salvar {
+    background-color: var(--cor-escura);
+    color: var(--cor-branca);
+    border-color: var(--cor-escura);
+}
+
+.btn-salvar:hover:not(:disabled) {
     background-color: var(--cor-secundaria);
+    border-color: var(--cor-secundaria);
 }
 
-#form-login input[type="submit"]:active {
-    transform: scale(0.97);
+/* Cancelar: secundário */
+.btn-cancelar {
+    background-color: transparent;
+    color: var(--cor-texto);
+    border-color: var(--cor-borda);
 }
 
-.login-container span {
-    color: #78716c;
+.btn-cancelar:hover {
+    background-color: #f3eee9;
+}
+
+/* --- Modo de edição --- */
+
+.comentario-edicao {
+    width: 100%;
+    padding: 10px 12px;
+
+    color: var(--cor-texto);
     font-size: 14px;
-    text-align: center;
+
+    border: 2px solid var(--cor-borda);
+    border-radius: var(--raio-botao);
+    outline: none;
+
+    transition: border-color var(--transicao);
 }
 
-.login-container span a {
-    color: var(--cor-principal);
-    font-weight: 700;
-    transition: color var(--transicao);
+.comentario-edicao:focus {
+    border-color: var(--cor-principal);
 }
 
-.login-container span a:hover {
-    color: var(--cor-secundaria);
-    text-decoration: underline;
+.msg-edicao {
+    flex-basis: 100%;
+    margin: 0;
+
+    color: var(--cor-perigo);
+    font-size: 0.85rem;
+    text-align: right;
 }
 
-/* ========================================
-   13. PÁGINA DE CADASTRO
-======================================== */
+.msg-edicao:empty {
+    display: none;
+}
 
+
+/* ==========================================================================
+   13. LOGIN E CADASTRO (estilos compartilhados)
+   ========================================================================== */
+
+.login-background,
 .cadastro-background {
     min-height: calc(100vh - 80px);
     padding: 40px 5%;
@@ -1030,14 +1047,11 @@ input:focus-visible {
     align-items: center;
 
     background:
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(207, 123, 62, 0.4),
-            transparent 35%
-        ),
+        radial-gradient(circle at 85% 20%, rgba(207, 123, 62, 0.4), transparent 35%),
         var(--cor-principal);
 }
 
+.login-container,
 .cadastro-container {
     width: 100%;
     max-width: 400px;
@@ -1053,6 +1067,7 @@ input:focus-visible {
     box-shadow: var(--sombra-hover);
 }
 
+.login-container h2,
 .cadastro-container h2 {
     color: var(--cor-escura);
     font-size: 26px;
@@ -1060,6 +1075,7 @@ input:focus-visible {
     text-align: center;
 }
 
+.login-container h2::after,
 .cadastro-container h2::after {
     content: "";
     display: block;
@@ -1072,12 +1088,15 @@ input:focus-visible {
     border-radius: 10px;
 }
 
+.login-container form,
 .cadastro-container form {
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
+/* Campos */
+.login-container input:not([type="submit"]),
 .cadastro-container input:not([type="submit"]) {
     width: 100%;
     padding: 14px 18px;
@@ -1086,24 +1105,27 @@ input:focus-visible {
     color: var(--cor-texto);
 
     border: 2px solid var(--cor-borda);
-    border-radius: 8px;
+    border-radius: var(--raio-botao);
     outline: none;
 
     font-size: 15px;
-    transition:
-        border-color var(--transicao),
-        box-shadow var(--transicao);
+
+    transition: border-color var(--transicao), box-shadow var(--transicao);
 }
 
+.login-container input::placeholder,
 .cadastro-container input::placeholder {
     color: var(--cor-texto-claro);
 }
 
+.login-container input:not([type="submit"]):focus,
 .cadastro-container input:not([type="submit"]):focus {
     border-color: var(--cor-principal);
     box-shadow: var(--sombra);
 }
 
+/* Botão de envio */
+.login-container input[type="submit"],
 .cadastro-container input[type="submit"] {
     width: 100%;
     margin-top: 6px;
@@ -1113,87 +1135,100 @@ input:focus-visible {
     color: var(--cor-branca);
 
     border: none;
-    border-radius: 8px;
+    border-radius: var(--raio-botao);
 
     font-weight: 700;
     cursor: pointer;
 
-    transition:
-        background-color var(--transicao),
-        transform var(--transicao);
+    transition: background-color var(--transicao), transform var(--transicao);
 }
 
+.login-container input[type="submit"]:hover,
 .cadastro-container input[type="submit"]:hover {
     background-color: var(--cor-secundaria);
 }
 
+.login-container input[type="submit"]:active,
 .cadastro-container input[type="submit"]:active {
     transform: scale(0.97);
 }
 
+.login-container input[type="submit"]:disabled,
+.cadastro-container input[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Mensagem de erro/aviso do formulário */
+#form-login-msg,
+.form-msg {
+    margin: 0;
+
+    color: var(--cor-perigo);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+#form-login-msg:empty,
+.form-msg:empty {
+    display: none;
+}
+
+/* Link para a outra página (cadastro / login) */
+.login-container span,
 .cadastro-container span {
-    color: #78716c;
+    color: var(--cor-texto-suave);
     font-size: 14px;
     text-align: center;
 }
 
+.login-container span a,
 .cadastro-container span a {
     color: var(--cor-principal);
     font-weight: 700;
     transition: color var(--transicao);
 }
 
+.login-container span a:hover,
 .cadastro-container span a:hover {
     color: var(--cor-secundaria);
     text-decoration: underline;
 }
 
-#comment-box-msg {
-    color: #c0392b;
-    font-size: 0.9rem;
+
+/* ==========================================================================
+   14. ACESSIBILIDADE
+   ========================================================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--cor-secundaria);
+    outline-offset: 4px;
 }
 
-.review-acoes {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 8px;
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
 }
 
-.review-acoes button {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    padding: 4px 0;
-}
 
-.btn-editar,
-.btn-salvar { color: #2c7be5; }
+/* ==========================================================================
+   15. RESPONSIVO
+   ========================================================================== */
 
-.btn-deletar { color: #c0392b; }
-
-.btn-cancelar { color: #666; }
-
-.comentario-edicao {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-.msg-edicao {
-    color: #c0392b;
-    font-size: 0.85rem;
-    margin: 0;
-}
-
-/* ========================================
-  RESPONSIVIDADE GERAL
-======================================== */
-
+/* --- Tablet (até 1000px) --- */
 @media (max-width: 1000px) {
+    :root {
+        --espaco-lateral: 5%;
+    }
+
     .main-header {
-        padding: 18px 5%;
         flex-wrap: wrap;
     }
 
@@ -1204,14 +1239,12 @@ input:focus-visible {
     .destaque-grid,
     #categorias,
     .pag-pesquisa-main > section {
-        padding: 55px 5%;
+        padding-top: 55px;
+        padding-bottom: 55px;
     }
 
-    .destaque-grid article,
-    .ul-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    #lista-destaques,
+    .ul-grid,
     .grid-categoria {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1220,21 +1253,19 @@ input:focus-visible {
         grid-template-columns: 1fr;
     }
 
-    .page-detalhes main > section:nth-of-type(4) {
+    #ft-recomendacoes {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    footer {
-        padding-right: 5%;
-        padding-left: 5%;
     }
 }
 
+/* --- Celular (até 600px) --- */
 @media (max-width: 600px) {
+
+    /* Cabeçalho e menu */
     .main-header {
         flex-direction: column;
         gap: 15px;
-        padding: 20px 5%;
+        padding: 20px var(--espaco-lateral);
     }
 
     .main-header h1 {
@@ -1254,9 +1285,10 @@ input:focus-visible {
         font-size: 13px;
     }
 
+    /* Hero */
     .hero {
         min-height: 260px;
-        padding: 30px 5%;
+        padding: 30px var(--espaco-lateral);
     }
 
     .hero input {
@@ -1271,10 +1303,12 @@ input:focus-visible {
         font-size: 14px;
     }
 
+    /* Home e pesquisa */
     .destaque-grid,
     #categorias,
     .pag-pesquisa-main > section {
-        padding: 45px 5%;
+        padding-top: 45px;
+        padding-bottom: 45px;
     }
 
     .destaque-grid h2,
@@ -1283,7 +1317,7 @@ input:focus-visible {
         font-size: 26px;
     }
 
-    .destaque-grid article,
+    #lista-destaques,
     .ul-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -1294,27 +1328,25 @@ input:focus-visible {
         gap: 15px;
     }
 
-    .card-categoria img {
-        height: 120px;
-    }
-
-    .card-categoria > div:last-child {
-        padding: 12px 8px;
-    }
-
     .card-categoria h3 {
         font-size: 15px;
     }
 
+    /* Detalhes */
     .page-detalhes main > section:nth-of-type(1),
     .page-detalhes main > section:nth-of-type(2),
     .page-detalhes main > section:nth-of-type(3),
     .page-detalhes main > section:nth-of-type(4) {
-        padding: 45px 5%;
+        padding-top: 45px;
+        padding-bottom: 45px;
     }
 
-    .page-detalhes main > section:nth-of-type(2),
-    .page-detalhes main > section:nth-of-type(4) {
+    .page-detalhes main > section:nth-of-type(2) {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    #ft-recomendacoes {
         grid-template-columns: 1fr;
         gap: 20px;
     }
@@ -1327,12 +1359,29 @@ input:focus-visible {
         height: 250px;
     }
 
+    /* Comentários: botões descem para baixo do texto, alinhados à direita */
+    .review-card {
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas:
+            "foto  nome"
+            "texto texto"
+            "acoes acoes";
+        row-gap: 10px;
+        align-items: start;
+    }
+
+    .review-acoes {
+        justify-content: flex-end;
+    }
+
+    /* Rodapé */
     footer {
+        padding: 35px var(--espaco-lateral) 20px;
+
         grid-template-columns: 1fr;
         justify-items: center;
         gap: 25px;
 
-        padding: 35px 5% 20px;
         text-align: center;
     }
 
@@ -1350,18 +1399,13 @@ input:focus-visible {
         width: 100%;
     }
 
-    .login-background {
+    /* Login e cadastro */
+    .login-background,
+    .cadastro-background {
         padding: 30px 5%;
     }
 
-    .login-container {
-        padding: 30px 20px;
-    }
-
-        .cadastro-background {
-        padding: 30px 5%;
-    }
-
+    .login-container,
     .cadastro-container {
         padding: 30px 20px;
         gap: 20px;
@@ -1372,6 +1416,7 @@ input:focus-visible {
     }
 }
 
+/* --- Celular pequeno (até 360px) --- */
 @media (max-width: 360px) {
     .menu ul {
         gap: 10px;
