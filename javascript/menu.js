@@ -1,3 +1,8 @@
+// menu.js
+// Depende de auth.js (estaLogado, getUsuario, logout).
+// Com sessão: o item LOGIN vira o nome do usuário (link para o perfil)
+// e o item CADASTRAR vira SAIR.
+
 function atualizarMenu() {
     const itemLogin = document.getElementById('menu-login');
     const itemCadastro = document.getElementById('menu-cadastro');
@@ -6,13 +11,16 @@ function atualizarMenu() {
 
     const usuario = getUsuario();
 
-    // O item de login vira o nome do usuário
+    // Nome do usuário -> perfil.html
     itemLogin.textContent = '';
-    const nome = document.createElement('span');
-    nome.textContent = usuario.nome;
-    itemLogin.appendChild(nome);
+    const linkPerfil = document.createElement('a');
+    linkPerfil.href = 'perfil.html';
+    linkPerfil.className = 'menu-usuario';
+    linkPerfil.title = 'Meu perfil';
+    linkPerfil.textContent = usuario.nome;
+    itemLogin.appendChild(linkPerfil);
 
-    // O item de cadastro vira "SAIR"
+    // SAIR
     itemCadastro.textContent = '';
     const sair = document.createElement('a');
     sair.href = '#';

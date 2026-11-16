@@ -2121,3 +2121,11 @@ input:focus-visible {
         grid-template-columns: 1fr;
     }
 }
+
+.menu a.menu-usuario {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
