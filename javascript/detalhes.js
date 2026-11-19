@@ -2,6 +2,8 @@
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('pagina');
 
+const FOTO_PADRAO = 'assets/person.jpeg'
+
 function el(tag, className, texto) {
     const e = document.createElement(tag);
     if (className) e.className = className;
@@ -16,8 +18,12 @@ function criarComentario(c) {
 
     const foto = el('div', 'review-photo');
     const img = document.createElement('img');
-    img.src = 'assets/person.jpeg';
-    img.alt = 'foto do usuário';
+    img.referrerPolicy = 'no-referrer';
+    img.alt = c.autor ? `Foto de ${c.autor.nome}` : 'foto do usuário';
+    img.src = (c.autor && c.autor.foto) || FOTO_PADRAO;
+    img.addEventListener('error', () => {
+        if (!img.src.endsWith(FOTO_PADRAO)) img.src = FOTO_PADRAO;
+    });
     foto.appendChild(img);
 
     const nomeBox = el('div', 'review-nome-estrela-inline');
