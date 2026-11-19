@@ -2129,3 +2129,17 @@ input:focus-visible {
     white-space: nowrap;
     vertical-align: bottom;
 }
+
+.login-info {
+    color: var(--cor-texto-suave);
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+#google-btn {
+    display: flex;
+    justify-content: center;
+    min-height: 44px;
+    transition: opacity var(--transicao);
+}
+

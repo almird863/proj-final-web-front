@@ -2,10 +2,9 @@
 // Depende de auth.js (API_URL, estaLogado, getToken, getUsuario, salvarSessao,
 // limparSessao, fetchAutenticado) e, opcionalmente, de menu.js (atualizarMenu).
 //
-// Rotas esperadas no backend (todas protegidas com o middleware "autenticar"):
-//   GET    /usuarios/me         -> { id, nome, email }
-//   PUT    /usuarios/me         -> body { nome, email } -> { id, nome, email }
-//   PUT    /usuarios/me/senha   -> body { senhaAtual, senhaNova }
+// Rotas do backend (todas protegidas com o middleware "autenticar"):
+//   GET    /usuarios/me  -> { id, nome, email, foto }
+//   PUT    /usuarios/me  -> body { nome } -> { id, nome, email, foto }
 //   DELETE /usuarios/me
 
 // ---------- Elementos ----------
@@ -20,34 +19,27 @@ const btnSalvar = document.getElementById('perfil-btn-salvar');
 const btnCancelar = document.getElementById('perfil-btn-cancelar');
 const blocoAcoesEdicao = document.getElementById('perfil-acoes-edicao');
 
+const fotoPerfil = document.getElementById('perfil-foto');
 const tituloPerfil = document.getElementById('perfil-titulo');
 const subtituloPerfil = document.getElementById('perfil-subtitulo');
 
-const formSenha = document.getElementById('form-senha');
-const campoSenhaAtual = document.getElementById('senha-atual');
-const campoSenhaNova = document.getElementById('senha-nova');
-const campoSenhaConfirmar = document.getElementById('senha-confirmar');
-const msgSenha = document.getElementById('senha-msg');
-const btnSenha = document.getElementById('senha-btn-salvar');
-
 const btnExcluir = document.getElementById('perfil-btn-excluir');
+
+const FOTO_PADRAO = 'assets/person.jpeg';
 
 // Dados do usuário como estão salvos no servidor (usado no "Cancelar")
 let dadosAtuais = null;
 
-const TAMANHO_MIN_SENHA = 8;
-const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 // ---------- Utilitários ----------
 
-function mostrarMsg(elemento, texto, tipo = 'erro') {
-    elemento.textContent = texto;
-    elemento.className = tipo === 'sucesso' ? 'form-msg sucesso' : 'form-msg';
+function mostrarMsg(texto, tipo = 'erro') {
+    msgPerfil.textContent = texto;
+    msgPerfil.className = tipo === 'sucesso' ? 'form-msg sucesso' : 'form-msg';
 }
 
-function limparMsg(elemento) {
-    elemento.textContent = '';
-    elemento.className = 'form-msg';
+function limparMsg() {
+    msgPerfil.textContent = '';
+    msgPerfil.className = 'form-msg';
 }
 
 // Lê o JSON da resposta sem quebrar se o corpo vier vazio ou inválido
@@ -62,6 +54,8 @@ async function lerJson(resposta) {
 function preencherResumo(dados) {
     tituloPerfil.textContent = dados.nome;
     subtituloPerfil.textContent = dados.email;
+    fotoPerfil.src = dados.foto || FOTO_PADRAO;
+    fotoPerfil.alt = `Foto de ${dados.nome}`;
 }
 
 function preencherCampos(dados) {
@@ -69,9 +63,21 @@ function preencherCampos(dados) {
     campoEmail.value = dados.email;
 }
 
+// Se a foto do Google não carregar, usa a imagem padrão
+fotoPerfil.addEventListener('error', () => {
+    if (!fotoPerfil.src.endsWith(FOTO_PADRAO)) {
+        fotoPerfil.src = FOTO_PADRAO;
+    }
+});
+
 // Mantém o localStorage e o menu em dia com os dados novos
 function sincronizarSessao(dados) {
-    salvarSessao(getToken(), { id: dados.id, nome: dados.nome, email: dados.email });
+    salvarSessao(getToken(), {
+        id: dados.id,
+        nome: dados.nome,
+        email: dados.email,
+        foto: dados.foto
+    });
 
     if (typeof atualizarMenu === 'function') {
         atualizarMenu();
@@ -79,12 +85,12 @@ function sincronizarSessao(dados) {
 }
 
 // ---------- Modo de edição ----------
+// Só o nome é editável. O e-mail pertence à conta Google e fica sempre bloqueado.
 
 function entrarEdicao() {
-    limparMsg(msgPerfil);
+    limparMsg();
 
     campoNome.disabled = false;
-    campoEmail.disabled = false;
     blocoAcoesEdicao.hidden = false;
     btnEditar.hidden = true;
 
@@ -94,14 +100,13 @@ function entrarEdicao() {
 
 function sairEdicao() {
     campoNome.disabled = true;
-    campoEmail.disabled = true;
     blocoAcoesEdicao.hidden = true;
     btnEditar.hidden = false;
 }
 
 function cancelarEdicao() {
     if (dadosAtuais) preencherCampos(dadosAtuais);
-    limparMsg(msgPerfil);
+    limparMsg();
     sairEdicao();
 }
 
@@ -113,7 +118,7 @@ async function carregarPerfil() {
 
         if (!resposta.ok) {
             const erro = await lerJson(resposta);
-            mostrarMsg(msgPerfil, erro.message || 'Não foi possível carregar seus dados.');
+            mostrarMsg(erro.message || 'Não foi possível carregar seus dados.');
             return;
         }
 
@@ -122,33 +127,26 @@ async function carregarPerfil() {
         preencherCampos(dadosAtuais);
         sincronizarSessao(dadosAtuais);
     } catch (err) {
-        mostrarMsg(msgPerfil, 'Erro de conexão com o servidor.');
+        mostrarMsg('Erro de conexão com o servidor.');
     }
 }
 
-// ---------- Salvar dados pessoais ----------
+// ---------- Salvar nome ----------
 
 async function salvarPerfil(e) {
     e.preventDefault();
-    limparMsg(msgPerfil);
+    limparMsg();
 
     const nome = campoNome.value.trim();
-    const email = campoEmail.value.trim().toLowerCase();
 
     if (!nome) {
-        mostrarMsg(msgPerfil, 'Informe o seu nome.');
+        mostrarMsg('Informe o seu nome.');
         campoNome.focus();
         return;
     }
 
-    if (!REGEX_EMAIL.test(email)) {
-        mostrarMsg(msgPerfil, 'Informe um e-mail válido.');
-        campoEmail.focus();
-        return;
-    }
-
     // Nada mudou: só fecha o modo de edição
-    if (dadosAtuais && nome === dadosAtuais.nome && email === dadosAtuais.email) {
+    if (dadosAtuais && nome === dadosAtuais.nome) {
         sairEdicao();
         return;
     }
@@ -159,13 +157,13 @@ async function salvarPerfil(e) {
     try {
         const resposta = await fetchAutenticado(`${API_URL}/usuarios/me`, {
             method: 'PUT',
-            body: JSON.stringify({ nome, email })
+            body: JSON.stringify({ nome })
         });
 
         const dados = await lerJson(resposta);
 
         if (!resposta.ok) {
-            mostrarMsg(msgPerfil, dados.message || 'Não foi possível salvar as alterações.');
+            mostrarMsg(dados.message || 'Não foi possível salvar as alterações.');
             return;
         }
 
@@ -174,71 +172,12 @@ async function salvarPerfil(e) {
         preencherCampos(dados);
         sincronizarSessao(dados);
         sairEdicao();
-        mostrarMsg(msgPerfil, 'Dados atualizados com sucesso.', 'sucesso');
+        mostrarMsg('Nome atualizado com sucesso.', 'sucesso');
     } catch (err) {
-        mostrarMsg(msgPerfil, 'Erro de conexão com o servidor.');
+        mostrarMsg('Erro de conexão com o servidor.');
     } finally {
         btnSalvar.disabled = false;
         btnSalvar.textContent = 'Salvar alterações';
-    }
-}
-
-// ---------- Alterar senha ----------
-
-async function alterarSenha(e) {
-    e.preventDefault();
-    limparMsg(msgSenha);
-
-    const senhaAtual = campoSenhaAtual.value;
-    const senhaNova = campoSenhaNova.value;
-    const senhaConfirmar = campoSenhaConfirmar.value;
-
-    if (!senhaAtual || !senhaNova || !senhaConfirmar) {
-        mostrarMsg(msgSenha, 'Preencha todos os campos.');
-        return;
-    }
-
-    if (senhaNova.length < TAMANHO_MIN_SENHA) {
-        mostrarMsg(msgSenha, `A nova senha deve ter pelo menos ${TAMANHO_MIN_SENHA} caracteres.`);
-        campoSenhaNova.focus();
-        return;
-    }
-
-    if (senhaNova !== senhaConfirmar) {
-        mostrarMsg(msgSenha, 'A confirmação não é igual à nova senha.');
-        campoSenhaConfirmar.focus();
-        return;
-    }
-
-    if (senhaNova === senhaAtual) {
-        mostrarMsg(msgSenha, 'A nova senha deve ser diferente da atual.');
-        campoSenhaNova.focus();
-        return;
-    }
-
-    btnSenha.disabled = true;
-    btnSenha.textContent = 'Atualizando...';
-
-    try {
-        const resposta = await fetchAutenticado(`${API_URL}/usuarios/me/senha`, {
-            method: 'PUT',
-            body: JSON.stringify({ senhaAtual, senhaNova })
-        });
-
-        const dados = await lerJson(resposta);
-
-        if (!resposta.ok) {
-            mostrarMsg(msgSenha, dados.message || 'Não foi possível atualizar a senha.');
-            return;
-        }
-
-        formSenha.reset();
-        mostrarMsg(msgSenha, 'Senha atualizada com sucesso.', 'sucesso');
-    } catch (err) {
-        mostrarMsg(msgSenha, 'Erro de conexão com o servidor.');
-    } finally {
-        btnSenha.disabled = false;
-        btnSenha.textContent = 'Atualizar senha';
     }
 }
 
@@ -246,7 +185,7 @@ async function alterarSenha(e) {
 
 async function excluirConta() {
     const confirmou = confirm(
-        'Tem certeza que deseja excluir sua conta?\n\nEssa ação é permanente e não pode ser desfeita.'
+        'Tem certeza que deseja excluir sua conta?\n\nSeus comentários também serão apagados. Essa ação é permanente e não pode ser desfeita.'
     );
     if (!confirmou) return;
 
@@ -288,7 +227,6 @@ function iniciar() {
     btnEditar.addEventListener('click', entrarEdicao);
     btnCancelar.addEventListener('click', cancelarEdicao);
     formPerfil.addEventListener('submit', salvarPerfil);
-    formSenha.addEventListener('submit', alterarSenha);
     btnExcluir.addEventListener('click', excluirConta);
 
     // Esc cancela a edição
